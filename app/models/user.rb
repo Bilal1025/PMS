@@ -11,6 +11,12 @@ class User < ApplicationRecord
 
   enum role: [ :admin, :manager, :user]
 
+  scope :admin_users, -> {
+    where.not(role: "admin")
+  }
+
+  attr_writer :login
+
   def login
     @login || self.username || self.email
   end
