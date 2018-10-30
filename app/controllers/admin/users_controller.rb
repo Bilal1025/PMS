@@ -1,5 +1,6 @@
 class Admin::UsersController < Admin::AdminsController
   before_action :find_user, except: [:index, :new, :create]
+  rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
   def index
     @users = User.non_admin_users
@@ -51,5 +52,9 @@ class Admin::UsersController < Admin::AdminsController
 
   def find_user
     @user = User.find(params[:id])
+  end
+
+  def record_not_found
+    render plain: "404 Not Found", status: 404
   end
 end

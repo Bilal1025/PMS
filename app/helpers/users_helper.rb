@@ -1,6 +1,6 @@
 module UsersHelper
   def roles_list
-    User.roles.keys.reject{ |role| role == User::ADMIN }.collect(&:humanize)
+    User.roles.keys.reject{ |role| role == User::ADMIN }
   end
 
   def titalize(title)
