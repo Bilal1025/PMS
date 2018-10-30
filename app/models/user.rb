@@ -6,7 +6,7 @@ class User < ApplicationRecord
          authentication_keys: [:login]
 
   validate :validate_username
-  validates :username, presence: :true, uniqueness: {case_sensitive: false}, format: { with: /^[a-zA-Z0-9_\.]*$/, multiline: true }
+  validates :username, presence: :true, uniqueness: { case_sensitive: false }, format: { with: /^[a-zA-Z0-9_\.]*$/, multiline: true }
 
   ADMIN = 'admin'
 

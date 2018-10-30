@@ -1,6 +1,5 @@
 class Admin::UsersController < Admin::AdminsController
-  before_action :find_user, except: [:index, :new, :create]
-  rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
+  before_action :get_user, except: [:index, :new, :create]
 
   def index
     @users = User.non_admin_users
@@ -50,11 +49,7 @@ class Admin::UsersController < Admin::AdminsController
     params.require(:user).permit(:username, :email, :password, :password_confirmation, :active, :role)
   end
 
-  def find_user
+  def get_user
     @user = User.find(params[:id])
-  end
-
-  def record_not_found
-    render plain: "404 Not Found", status: 404
   end
 end

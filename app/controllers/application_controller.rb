@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
-	before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :authenticate_user!
+  before_action :configure_permitted_parameters, if: :devise_controller?
+  rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
 	protected
   def configure_permitted_parameters
@@ -12,8 +13,14 @@ class ApplicationController < ActionController::Base
   def after_sign_in_path_for(resource)
     if resource.admin?
       admin_users_path
+    elsif resource.manager?
+      clients_path
     else
       root_path
     end
+  end
+
+  def record_not_found
+    render file: 'public/404.html', status: :not_found, layout: false
   end
 end
