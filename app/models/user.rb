@@ -6,14 +6,13 @@ class User < ApplicationRecord
          authentication_keys: [:login]
 
   validate :validate_username
-  validates :username, presence: :true, uniqueness: { case_sensitive: false }
-  validates_format_of :username, with: /^[a-zA-Z0-9_\.]*$/, :multiline => true
+  validates :username, presence: :true, uniqueness: {case_sensitive: false}, format: { with: /^[a-zA-Z0-9_\.]*$/, multiline: true }
 
-  enum role: [ :admin, :manager, :user]
+  ADMIN = 'admin'
 
-  scope :admin_users, -> {
-    where.not(role: "admin")
-  }
+  enum role: [:admin, :manager, :user]
+
+  scope :non_admin_users, -> { where.not(role: :admin) }
 
   attr_writer :login
 
@@ -22,17 +21,29 @@ class User < ApplicationRecord
   end
 
   def self.find_for_database_authentication(warden_conditions)
-      conditions = warden_conditions.dup
-      if login = conditions.delete(:login)
-        where(conditions.to_h).where(["lower(username) = :value OR lower(email) = :value", { :value => login.downcase }]).first
-      elsif conditions.has_key?(:username) || conditions.has_key?(:email)
-        where(conditions.to_h).first
-      end
+    conditions = warden_conditions.dup
+    if login = conditions.delete(:login)
+      where(conditions.to_h).where(['lower(username) = :value OR lower(email) = :value', { value: login.downcase }]).first
+    elsif conditions.has_key?(:username) || conditions.has_key?(:email)
+      where(conditions.to_h).first
+    end
   end
 
   def validate_username
     if User.where(email: username).exists?
       errors.add(:username, :invalid)
     end
+  end
+
+  def active_for_authentication?
+    super && active?
+  end
+
+  def inactive_message
+    active? ? super : :not_active
+  end
+
+  def toggle_active
+    self.update(active: !self.active)
   end
 end
