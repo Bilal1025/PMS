@@ -1,4 +1,4 @@
-class Admin::AdminsController < ApplicationController
+class Admin::BaseController < ApplicationController
  before_action :admin_check
 
   def admin_check

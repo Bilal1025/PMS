@@ -1,4 +1,4 @@
-class Admin::ClientsController < ApplicationController
+class Admin::ClientsController < Admin::BaseController
   before_action :get_client, except: [:index, :new, :create]
 
   def index

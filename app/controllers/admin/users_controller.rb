@@ -1,4 +1,4 @@
-class Admin::UsersController < Admin::AdminsController
+class Admin::UsersController < Admin::BaseController
   before_action :get_user, except: [:index, :new, :create]
 
   def index

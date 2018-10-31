@@ -11,5 +11,16 @@
  * It is generally better to create a new file per style scope.
  *
  *= require_tree .
+ *= require material-dashboard
+ *= require font-awesome
+ *= require material-icons
  *= require_self
  */
+
+table thead tr th {
+  text-align: center;
+}
+
+.card .table tr td {
+  text-align: center;
+}
