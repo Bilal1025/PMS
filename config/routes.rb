@@ -4,7 +4,7 @@ Rails.application.routes.draw do
 
   root 'projects#index'
   
-  namespace :admin do
+  namespace :admin, constraints: { id: /[0-9]+(\%7C[0-9]+)*/ } do
     resources :users do
       member do
         patch :toggle_active

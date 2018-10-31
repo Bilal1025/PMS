@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!
   before_action :configure_permitted_parameters, if: :devise_controller?
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
+  rescue_from ActionController::RoutingError, with: :route_not_found
 
 	protected
   def configure_permitted_parameters
@@ -21,6 +22,10 @@ class ApplicationController < ActionController::Base
   end
 
   def record_not_found
-    render file: 'public/404.html', status: :not_found, layout: false
+    render file: 'public/404.html', status: :record_not_found, layout: false
+  end
+
+  def route_not_found
+    render file: 'public/404.html', status: :route_not_found, layout: false
   end
 end
