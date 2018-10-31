@@ -6,21 +6,23 @@
   <div class="sidebar-wrapper">
     <ul class="nav">
       <li class="nav-item">
-        <%= link_to root_url, { class: "nav-link" } do %>
+        <%= link_to root_url, class: "nav-link" do %>
           <i class="material-icons">group_work</i>
           <p>Projects</p>
         <% end %>
       </li>
 
-      <li class="nav-item">
-        <%= link_to root_url, { class: "nav-link" } do %>
-          <i class="material-icons">person</i>
-          <p>Users</p>
-        <% end %>
-      </li>
+      <% if current_user.admin? %>
+        <li class="nav-item">
+          <%= link_to admin_users_path, class: "nav-link" do %>
+            <i class="material-icons">person</i>
+            <p>Users</p>
+          <% end %>
+        </li>
+      <% end %>
 
       <li class="nav-item">
-        <%= link_to root_url, { class: "nav-link" } do %>
+        <%= link_to url_for_client, class: "nav-link" do %>
           <i class="material-icons">work</i>
           <p>Clients</p>
         <% end %>

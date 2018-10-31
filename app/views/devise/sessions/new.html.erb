@@ -1,26 +1,50 @@
-<h2>Log in</h2>
+<div class="col-md-4"></div>
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :login %><br />
-    <%= f.text_field :login %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "current-password" %>
-  </div>
-
-  <% if devise_mapping.rememberable? -%>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
+<div class="col-md-4">
+  <div class="card">
+    <div class="card-header card-header-primary">
+      <h4 class="card-title">Login</h4>
+      <p class="card-category">Enter Project Management System</p>
     </div>
-  <% end -%>
+    <div class="card-body">
+      <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <%= f.label :login, class: "bmd-label-floating" %>
+              <%= f.text_field :login, class: "form-control" %>
+            </div>
+          </div>
+        </div>
 
-  <div class="actions">
-    <%= f.submit "Log in" %>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <%= f.label :password, class: "bmd-label-floating" %>
+              <%= f.password_field :password, class: "form-control" %>
+            </div>
+          </div>
+        </div>
+
+        <% if devise_mapping.rememberable? -%>
+          <div class="form-check">
+            <%= f.label :remember_me, class: "form-check-label" do %>
+              <%= f.check_box :remember_me, class: "form-check-input" %>
+              <span class="form-check-sign">
+              <span class="check"></span>
+              </span>
+                Remember Me
+            <% end %>
+          </div>
+        <% end %>
+
+        <%= f.submit "Login", class: "btn btn-primary col-md-12" %>
+
+        <div class="link">
+          <%= f.label "Dont' have an account? " %>
+          <%= link_to "Register Here!", new_registration_path(resource_name) %>
+        </div>
+      <% end %>
+    </div>
   </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+</div>

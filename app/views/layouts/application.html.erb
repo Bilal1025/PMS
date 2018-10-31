@@ -12,11 +12,9 @@
 
   <body>
     <div class="wrapper ">
-      <div class="<%= 'main-panel' if user_signed_in? %>">
-        <% if user_signed_in? %>
-          <%= render '/layouts/left_nav' %>
-          <%= render '/layouts/header' %>
-        <% end %>
+      <%= render '/layouts/left_nav' if user_signed_in? %>
+      <div class="main-panel">
+        <%= render '/layouts/header' if user_signed_in? %>
         <div class="content">
           <div class="container-fluid">
             <div class="row">

@@ -3,7 +3,11 @@ module ApplicationHelper
     title.to_s.humanize
   end
 
-  def boolean_to_string(flag)
-    flag ? 'Yes' : 'No'
+  def user_status(flag)
+    flag ? 'Active' : 'Not Active'
+  end
+
+  def url_for_client
+    current_user.admin? ? admin_clients_url : clients_url
   end
 end

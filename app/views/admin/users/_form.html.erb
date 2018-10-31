@@ -1,35 +1,58 @@
 <%= form_for [:admin, @user] do |f| %>
-  <div class='field'>
-    <%= f.label :username %><br />
-    <%= f.text_field :username, autofocus: true %><br />
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autocomplete: 'email' %>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="form-group">
+        <%= f.label :username, class: "bmd-label-floating" %>
+        <%= f.text_field :username, class: "form-control" %>
+      </div>
+    </div>
   </div>
 
-  <div class='field'>
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: 'new-password' %>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="form-group">
+        <%= f.label :email, class: "bmd-label-floating" %>
+        <%= f.email_field :email, class: "form-control" %>
+      </div>
+    </div>
   </div>
 
-  <div class='field'>
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: 'new-password' %>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="form-group">
+        <%= f.label :password, class: "bmd-label-floating" %>
+        <%= f.password_field :password, class: "form-control" %>
+      </div>
+    </div>
   </div>
 
-  <div class='field'>
-    <%= f.label :active %>
-    <%= f.check_box :active, {}, true %>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="form-group">
+        <%= f.label :password_confirmation, class: "bmd-label-floating" %>
+        <%= f.password_field :password_confirmation, class: "form-control" %>
+      </div>
+    </div>
   </div>
 
-   <div class='field'>
-    <%= f.label :role %>
-    <%= f.select :role, collection: roles_list %>
+  <div class="form-check">
+    <%= f.label :active, class: "form-check-label" do %>
+      <%= f.check_box :active, class: "form-check-input" %>
+      <span class="form-check-sign">
+      <span class="check"></span>
+      </span>
+        Active
+    <% end %>
   </div>
 
-  <div class='actions'>
-    <%= f.submit %>
+  <div class='field form-group'>
+   <%= f.label :role %>
+   <%= f.select :role, roles_list, {}, { class: "form-control" } %>
+  </div>
+
+  <%= f.submit class: "btn btn-primary col-md-12" %>
+
+  <div class="link">
+    <%= link_to 'Back', admin_users_path %>
   </div>
 <% end %>

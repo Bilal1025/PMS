@@ -1,24 +1,16 @@
 <%= form_for [:admin, @client] do |f| %>
-  <% if @client.errors.any? %>
-    <div id="error_explanation">
-      <h2>
-        <%= pluralize(@client.errors.count, "error") %> prohibited
-        this client from being saved:
-      </h2>
-      <ul>
-        <% @client.errors.full_messages.each do |msg| %>
-          <li><%= msg %></li>
-        <% end %>
-      </ul>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="form-group">
+        <%= f.label :name, class: "bmd-label-floating" %>
+        <%= f.text_field :name, class: "form-control" %>
+      </div>
     </div>
-  <% end %>
-
-  <div class='field'>
-    <%= f.label :name %><br />
-    <%= f.text_field :name, autofocus: true %><br />
   </div>
 
-  <div class='actions'>
-    <%= f.submit %>
+  <%= f.submit class: "btn btn-primary col-md-12" %>
+
+  <div class="link">
+    <%= link_to 'Back', admin_clients_path %>
   </div>
 <% end %>

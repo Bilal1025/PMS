@@ -1,6 +1,20 @@
-<p>
-  <strong>Name:</strong>
-  <%= titleize(@client.name) %>
-</p>
+<div class="col-md-2"></div>
 
-<%= link_to 'Back', clients_path %>
+<div class="col-md-8">
+<div class="card card-profile">
+  <div class="card-avatar">
+     <%= image_tag "faces/marc.jpg" %> />
+  </div>
+  <div class="card-body">
+    <h4 class="card-title"><%= titleize(@client.name) %></h4>
+    <p class="card-description">
+      Don't be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick Owens’ bed design but the back is...
+    </p>
+    <%= link_to "Edit", edit_client_path(@client), class: "btn btn-primary btn-round" %>
+    <%= link_to "Delete", client_path(@client), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-primary btn-round" %>
+    <div class="link">
+      <%= link_to 'Back', clients_path, class: "btn btn-primary" %>
+    </div>
+  </div>
+</div>
+</div>
