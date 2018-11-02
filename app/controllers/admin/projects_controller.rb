@@ -1,4 +1,4 @@
-class ProjectsController < ManagerController
+class Admin::ProjectsController < Admin::BaseController
   before_action :get_project, except: [:index, :new, :create]
 
   def index
@@ -13,7 +13,7 @@ class ProjectsController < ManagerController
     @project = Project.new(project_params)
 
     if @project.save
-      redirect_to projects_path
+      redirect_to admin_projects_path
     else
       render 'new'
     end
@@ -21,7 +21,7 @@ class ProjectsController < ManagerController
 
   def update
     if @project.update(project_params)
-      redirect_to project_path(@project)
+      redirect_to admin_project_path(@project)
     else
       render 'edit'
     end
@@ -32,7 +32,7 @@ class ProjectsController < ManagerController
 
   def destroy
     @project.destroy
-    redirect_to projects_path
+    redirect_to admin_projects_path
   end
 
   def edit

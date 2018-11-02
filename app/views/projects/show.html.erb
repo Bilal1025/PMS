@@ -1,0 +1,48 @@
+<div class="col-md-12">
+  <div class="card card-profile">
+    <div class="card-body">
+      <h4 class="card-title"><%= titleize(@project.name) %></h4>
+      <p class="card-description">
+        <%= @project.description %>
+      </p>
+      <%= link_to "Edit", edit_project_path(@project), class: "btn btn-primary btn-round" %>
+      <%= link_to "Delete", project_path(@project), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-primary btn-round" %>
+    </div>
+  </div>
+
+  <div class="col-lg-6 col-md-6">
+    <div class="card">
+      <div class="card-header card-header-tabs card-header-primary">
+        <h4 class="card-title">Payments</h4>
+        <p class="card-category">A list of payments made against <%= @project.name %></p>
+      </div>
+      <div class="card-body table-responsive">
+        <table class="table table-hover">
+          <thead class="text-primary">
+            <th>Amount</th>
+            <th>Delete</th>
+          </thead>
+          <tbody>
+            <% @project.payments.each do |payment| %>
+              <tr>
+                <td>
+                  <%= best_in_place [@project, payment], :amount, as: :input, html_attrs: { type: :number }, inner_class: "form-control", rel: "tooltip", title: "Click to Edit", class: "btn btn-primary btn-link btn-sm" %>
+                </td>
+                <td>
+                  <%= link_to project_payment_path(@project, payment), { rel: "tooltip", title: "Delete Payment", class: "btn btn-primary btn-link btn-sm" , method: :delete, data: { confirm: 'Are you sure?' } }  do %>
+                    <i class="material-icons">delete</i>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+      <%= render 'payments/payment', project: @project, payment: @project.payments.build %>
+    </div>
+  </div>
+
+  <div class="link">
+    <%= link_to 'Back', projects_path, class: "btn btn-primary" %>
+  </div>
+</div>
