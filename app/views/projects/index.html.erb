@@ -9,9 +9,8 @@
         <thead class="text-primary">
           <th>Name</th>
           <th>By</th>
+          <th>Manager</th>
           <th>Earnings</th>
-          <th>Edit</th>
-          <th>Delete</th>
         </thead>
         <tbody>
           <% @projects.each do |project| %>
@@ -23,17 +22,10 @@
                 <%= link_to titleize(project.client.name), client_path(project.client), { rel: "tooltip", title: "Profile", class: "btn btn-primary btn-link btn-sm" } %>
               </td>
               <td>
+                <%= titleize(project.manager.username) %>
+              </td>
+              <td>
                 <%= total_project_earning(project) %>
-              </td>
-              <td>
-                <%= link_to edit_project_path(project), { rel: "tooltip", title: "Edit Project", class: "btn btn-primary btn-link btn-sm" } do %>
-                  <i class="material-icons">edit</i>
-                <% end %>
-              </td>
-              <td>
-                <%= link_to project_path(project), { rel: "tooltip", title: "Delete Project", class: "btn btn-primary btn-link btn-sm" , method: :delete, data: { confirm: 'Are you sure?' } }  do %>
-                  <i class="material-icons">delete</i>
-                <% end %>
               </td>
             </tr>
           <% end %>

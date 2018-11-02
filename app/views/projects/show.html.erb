@@ -5,8 +5,7 @@
       <p class="card-description">
         <%= @project.description %>
       </p>
-      <%= link_to "Edit", edit_project_path(@project), class: "btn btn-primary btn-round" %>
-      <%= link_to "Delete", project_path(@project), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-primary btn-round" %>
+      <%= control_links(@project) %>
     </div>
   </div>
 
@@ -20,7 +19,9 @@
         <table class="table table-hover">
           <thead class="text-primary">
             <th>Amount</th>
-            <th>Delete</th>
+            <% if @project.manager == current_user %>
+              <th>Delete</th>
+            <% end %>
           </thead>
           <tbody>
             <% @project.payments.each do |payment| %>
@@ -28,17 +29,21 @@
                 <td>
                   <%= best_in_place [@project, payment], :amount, as: :input, html_attrs: { type: :number }, inner_class: "form-control", rel: "tooltip", title: "Click to Edit", class: "btn btn-primary btn-link btn-sm" %>
                 </td>
-                <td>
-                  <%= link_to project_payment_path(@project, payment), { rel: "tooltip", title: "Delete Payment", class: "btn btn-primary btn-link btn-sm" , method: :delete, data: { confirm: 'Are you sure?' } }  do %>
-                    <i class="material-icons">delete</i>
-                  <% end %>
-                </td>
+                <% if @project.manager == current_user %>
+                  <td>
+                    <%= link_to project_payment_path(@project, payment), { rel: "tooltip", title: "Delete Payment", class: "btn btn-primary btn-link btn-sm" , method: :delete, data: { confirm: 'Are you sure?' } }  do %>
+                      <i class="material-icons">delete</i>
+                    <% end %>
+                  </td>
+                <% end %>
               </tr>
             <% end %>
           </tbody>
         </table>
       </div>
-      <%= render 'payments/payment', project: @project, payment: @project.payments.build %>
+      <% if @project.manager == current_user %>
+        <%= render 'payments/form', project: @project, payment: @project.payments.build %>
+      <% end %>
     </div>
   </div>
 

@@ -14,6 +14,8 @@ class User < ApplicationRecord
 
   scope :non_admin_users, -> { where.not(role: :admin) }
 
+  has_many :projects, -> { where(role: :manager) }
+
   attr_writer :login
 
   def login
