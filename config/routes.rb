@@ -12,7 +12,15 @@ Rails.application.routes.draw do
     end
 
     resources :clients
+
+    resources :projects do
+      resources :payments
+    end
   end
 
   resources :clients
+
+  resources :projects do
+    resources :payments
+  end
 end

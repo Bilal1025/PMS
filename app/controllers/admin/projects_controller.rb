@@ -1,6 +1,5 @@
-class ProjectsController < ManagerController
+class Admin::ProjectsController < Admin::BaseController
   before_action :get_project, except: [:index, :new, :create]
-  before_action :authenticate_manager, only: [:edit, :update, :destroy]
 
   def index
     @projects = Project.all
@@ -12,10 +11,9 @@ class ProjectsController < ManagerController
 
   def create
     @project = Project.new(project_params)
-    @project.manager = current_user
 
     if @project.save
-      redirect_to projects_path
+      redirect_to admin_projects_path
     else
       render 'new'
     end
@@ -23,7 +21,7 @@ class ProjectsController < ManagerController
 
   def update
     if @project.update(project_params)
-      redirect_to project_path(@project)
+      redirect_to admin_project_path(@project)
     else
       render 'edit'
     end
@@ -34,7 +32,7 @@ class ProjectsController < ManagerController
 
   def destroy
     @project.destroy
-    redirect_to projects_path
+    redirect_to admin_projects_path
   end
 
   def edit
@@ -43,17 +41,10 @@ class ProjectsController < ManagerController
   private
 
   def project_params
-    params.require(:project).permit(:name, :description, :client_id)
+    params.require(:project).permit(:name, :description, :client_id, :user_id)
   end
 
   def get_project
     @project = Project.find(params[:id])
-  end
-
-  def authenticate_manager
-    unless @project.manager == current_user
-      flash[:error] = "Only the manager who has created the project can perform this action"
-      redirect_to projects_path
-    end
   end
 end
